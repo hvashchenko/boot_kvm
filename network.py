@@ -26,7 +26,7 @@ mac = "52:54:00:%02x:%02x:%02x" % (
 
 
 def configvm1():
-    with open ('/home/hvashchenko/.ssh/id_rsa.pub', 'r') as file:
+    with open ('~/.ssh/id_rsa.pub', 'r') as file:
         data = file.read ().replace ('\n', '')
     user_data_vm1="""#cloud-config
 password: password
@@ -89,7 +89,7 @@ network-interfaces: |
 
 def configvm2():
 
-    with open ('/home/hvashchenko/.ssh/id_rsa.pub', 'r') as file:
+    with open ('~/.ssh/id_rsa.pub', 'r') as file:
         data = file.read ().replace ('\n', '')
 
     user_data_vm2 = """#cloud-config
@@ -152,9 +152,9 @@ network-interfaces: |
 
 def config_iso():
 
-    os.system('sudo mkisofs -o "/var/lib/libvirt/images/vm1/config-vm1.iso" -V cidata -r -J --quiet /home/hvashchenko/libpy/config-drives/vm1-config')
+    os.system('sudo mkisofs -o "/var/lib/libvirt/images/vm1/config-vm1.iso" -V cidata -r -J --quiet ~/libpy/config-drives/vm1-config')
     subprocess.call(['sudo','cp','xenial-server-cloudimg-amd64-disk1.img','/var/lib/libvirt/images/vm1/vm1.qcow2'])
-    os.system ('sudo mkisofs -o "/var/lib/libvirt/images/vm2/config-vm2.iso" -V cidata -r -J --quiet /home/hvashchenko/libpy/config-drives/vm2-config')
+    os.system ('sudo mkisofs -o "/var/lib/libvirt/images/vm2/config-vm2.iso" -V cidata -r -J --quiet ~/libpy/config-drives/vm2-config')
     subprocess.call ([ 'sudo', 'cp', 'xenial-server-cloudimg-amd64-disk1.img', '/var/lib/libvirt/images/vm2/vm2.qcow2' ])
 
 
@@ -272,20 +272,20 @@ def main():
     config_iso()
 
     try:
-        with open('/home/hvashchenko/libpy/networks/internal.xml', 'r') as f2:
+        with open('~/libpy/networks/internal.xml', 'r') as f2:
             data_int = f2.read()
             create_network(data_int)
     except libvirt.libvirtError:
         print("Interntal created")
     try:
-        with open ('/home/hvashchenko/libpy/networks/external.xml', 'r') as f2:
+        with open ('~/networks/external.xml', 'r') as f2:
             data_ext = f2.read ()
             create_network (data_ext)
     except libvirt.libvirtError:
         print("External created")
 
     try:
-        with open ('/home/hvashchenko/libpy/networks/management.xml', 'r') as f2:
+        with open ('~/libpy/networks/management.xml', 'r') as f2:
             data_mgmt = f2.read ()
             create_network (data_mgmt)
     except libvirt.libvirtError:
